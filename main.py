@@ -165,18 +165,22 @@ def edit_cinema():
     i=listbox_lista_obiketow.index(ACTIVE)
     name=cinema[i].name
     location=cinema[i].location
+    loc2=cinema[i].location2
 
     entry_name.insert(0,name)
     entry_location.insert(0,location)
+    entry_location2.insert(0,loc2)
 
     button_dodaj_placowke.config(text='zapisz',command=lambda: update_cinema(i))
 
 def update_cinema(i):
     new_name=entry_name.get()
     new_location=entry_location.get()
+    new_inc=entry_location2.get()
 
     cinema[i].name=new_name
     cinema[i].location=new_location
+    cinema[i].location2=new_inc
 
     cinema[i].marker.delete()
     cinema[i].coordinates=cinema[i].get_coordinates()
@@ -473,14 +477,17 @@ def restore():
     show_worker()
 
     for idx,val in enumerate(cinema):
+        cinema[idx].marker.delete()
         cinema[idx].coordinates=cinema[idx].get_coordinates()
         cinema[idx].marker=map_widget.set_marker(cinema[idx].coordinates[0],cinema[idx].coordinates[1])
 
     for idx,val in enumerate(client):
+        client[idx].marker.delete()
         client[idx].coordinates=client[idx].get_coordinates()
         client[idx].marker=map_widget.set_marker(client[idx].coordinates[0],client[idx].coordinates[1])
 
     for idx,val in enumerate(worker):
+        worker[idx].marker.delete()
         worker[idx].coordinates=worker[idx].get_coordinates()
         worker[idx].marker=map_widget.set_marker(worker[idx].coordinates[0],worker[idx].coordinates[1])
 
@@ -494,7 +501,7 @@ def restore():
 
 root = Tk()
 root.geometry("1400x760")
-root.title("Project POP UK")
+root.title("Project POP AC")
 
 
 ramka_lista_obiektow=Frame(root)
@@ -561,7 +568,7 @@ button_edytuj_obiekt_worker.grid(row=2, column=11)
 # ramka_formularz
 label_formularz=Label(ramka_formularz, text="Formularz")
 label_formularz.grid(row=0, column=0, columnspan=2)
-label_name=Label(ramka_formularz, text="Name:")
+label_name=Label(ramka_formularz, text="Nazwa:")
 label_name.grid(row=1, column=0, sticky=W)
 label_location=Label(ramka_formularz, text="Miejscowość:")
 label_location.grid(row=2, column=0,sticky=W)
